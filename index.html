@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -7,135 +6,141 @@
 <title>相性鑑定 | Twinkle Star Oracle</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Serif+JP:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy: #0a0e1a;
-    --navy2: #0f1628;
-    --navy3: #1a2040;
-    --gold: #c9a84c;
-    --gold2: #e8c97a;
-    --gold3: #f5e0a0;
-    --white: #f0eadc;
-    --pink: #e8a0b0;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background-color: var(--navy); color: var(--white); font-family: 'Noto Serif JP', serif; min-height: 100vh; overflow-x: hidden; }
-  body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(ellipse at 20% 50%, rgba(200,80,120,0.06) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(180,140,60,0.06) 0%, transparent 50%), radial-gradient(ellipse at 60% 80%, rgba(60,80,180,0.06) 0%, transparent 50%); pointer-events: none; z-index: 0; }
-  .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-  .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--dur) ease-in-out infinite; }
-  @keyframes twinkle { 0%,100%{opacity:0.2;transform:scale(1);}50%{opacity:1;transform:scale(1.3);} }
+  :root { --navy:#0a0e1a; --navy2:#0f1628; --navy3:#1a2040; --gold:#c9a84c; --gold2:#e8c97a; --gold3:#f5e0a0; --white:#f0eadc; --pink:#e8a0b0; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background-color:var(--navy);color:var(--white);font-family:'Noto Serif JP',serif;min-height:100vh;overflow-x:hidden;}
+  body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at 20% 50%,rgba(200,80,120,0.06) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(180,140,60,0.06) 0%,transparent 50%);pointer-events:none;z-index:0;}
+  .stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+  .star{position:absolute;background:white;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite;}
+  @keyframes twinkle{0%,100%{opacity:0.2;transform:scale(1);}50%{opacity:1;transform:scale(1.3);}}
+  .container{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:40px 20px 80px;}
+  .header{text-align:center;margin-bottom:50px;animation:fadeDown 0.8s ease both;}
+  .site-name{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;opacity:0.8;}
+  .title{font-family:'Cinzel',serif;font-size:clamp(26px,6vw,38px);color:var(--gold2);letter-spacing:3px;margin-bottom:10px;text-shadow:0 0 30px rgba(201,168,76,0.3);}
+  .subtitle{font-size:13px;color:rgba(240,234,220,0.5);letter-spacing:2px;}
+  .divider{width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:20px auto;}
 
-  .container { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 40px 20px 80px; }
+  /* 入力 */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+  @media(max-width:520px){.two-col{grid-template-columns:1fr;}}
+  .person-card{background:linear-gradient(135deg,rgba(26,32,64,0.9),rgba(15,22,40,0.95));border:1px solid rgba(201,168,76,0.2);border-radius:16px;padding:28px 24px;box-shadow:0 20px 60px rgba(0,0,0,0.4);animation:fadeUp 0.8s ease 0.2s both;}
+  .person-card.person-b{border-color:rgba(232,160,176,0.25);animation-delay:0.35s;}
+  .person-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:20px;text-align:center;}
+  .person-card.person-b .person-label{color:var(--pink);}
+  .form-group{margin-bottom:16px;}
+  label{display:block;font-size:11px;color:var(--gold);letter-spacing:2px;margin-bottom:8px;}
+  .person-card.person-b label{color:var(--pink);}
+  input[type="text"],input[type="date"]{width:100%;background:rgba(10,14,26,0.6);border:1px solid rgba(201,168,76,0.25);border-radius:8px;padding:12px 14px;color:var(--white);font-family:'Noto Serif JP',serif;font-size:14px;outline:none;transition:border-color 0.3s;}
+  .person-card.person-b input[type="text"],.person-card.person-b input[type="date"]{border-color:rgba(232,160,176,0.2);}
+  input:focus{border-color:var(--gold)!important;box-shadow:0 0 0 3px rgba(201,168,76,0.1);}
+  input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(0.7) sepia(1) saturate(3) hue-rotate(5deg);cursor:pointer;}
+  .btn{width:100%;padding:16px;background:linear-gradient(135deg,#8a6a20,var(--gold),#8a6a20);background-size:200% 100%;border:none;border-radius:8px;color:var(--navy);font-family:'Cinzel',serif;font-size:14px;font-weight:700;letter-spacing:3px;cursor:pointer;transition:all 0.4s;margin-top:8px;}
+  .btn:hover{background-position:100% 0;box-shadow:0 8px 30px rgba(201,168,76,0.35);transform:translateY(-1px);}
 
-  .header { text-align: center; margin-bottom: 50px; animation: fadeDown 0.8s ease both; }
-  .site-name { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; margin-bottom: 16px; opacity: 0.8; }
-  .title { font-family: 'Cinzel', serif; font-size: clamp(26px,6vw,38px); color: var(--gold2); letter-spacing: 3px; margin-bottom: 10px; text-shadow: 0 0 30px rgba(201,168,76,0.3); }
-  .subtitle { font-size: 13px; color: rgba(240,234,220,0.5); letter-spacing: 2px; }
-  .divider { width: 120px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 20px auto; }
+  #result{display:none;animation:fadeUp 0.6s ease both;}
 
-  /* 2人入力 */
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
-  @media(max-width:520px){ .two-col { grid-template-columns: 1fr; } }
+  /* スコアカード */
+  .score-card{background:linear-gradient(135deg,rgba(26,32,64,0.95),rgba(15,22,40,0.98));border:1px solid rgba(201,168,76,0.35);border-radius:16px;padding:40px 36px;text-align:center;margin-bottom:24px;position:relative;overflow:hidden;}
+  .names-display{font-family:'Cinzel',serif;font-size:15px;color:var(--white);letter-spacing:2px;margin-bottom:24px;opacity:0.8;}
+  .names-display .heart{color:var(--pink);margin:0 10px;}
+  .score-ring{position:relative;width:160px;height:160px;margin:0 auto 24px;}
+  .score-ring svg{transform:rotate(-90deg);}
+  .score-ring circle{fill:none;stroke-width:8;}
+  .ring-bg{stroke:rgba(201,168,76,0.1);}
+  .ring-fill{stroke:url(#ringGrad);stroke-linecap:round;transition:stroke-dashoffset 1.5s ease;}
+  .score-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
+  .score-num{font-family:'Cinzel',serif;font-size:42px;color:var(--gold2);line-height:1;}
+  .score-pct{font-size:16px;color:var(--gold);}
+  .score-label{font-family:'Cinzel',serif;font-size:18px;color:var(--gold3);letter-spacing:3px;margin-bottom:8px;}
+  .score-desc{font-size:13px;color:rgba(240,234,220,0.55);letter-spacing:1px;}
 
-  .person-card { background: linear-gradient(135deg, rgba(26,32,64,0.9), rgba(15,22,40,0.95)); border: 1px solid rgba(201,168,76,0.2); border-radius: 16px; padding: 28px 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); animation: fadeUp 0.8s ease 0.2s both; }
-  .person-card.person-b { border-color: rgba(232,160,176,0.25); animation-delay: 0.35s; }
+  /* 2人の星 */
+  .two-stars{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:20px;}
+  .mini-star{background:linear-gradient(135deg,rgba(26,32,64,0.9),rgba(15,22,40,0.95));border:1px solid rgba(201,168,76,0.2);border-radius:12px;padding:20px 16px;text-align:center;}
+  .mini-star.star-b{border-color:rgba(232,160,176,0.2);}
+  .mini-symbol{font-size:32px;margin-bottom:8px;}
+  .mini-name{font-size:11px;color:var(--gold);letter-spacing:1px;margin-bottom:4px;}
+  .mini-star.star-b .mini-name{color:var(--pink);}
+  .mini-num{font-family:'Cinzel',serif;font-size:22px;color:var(--gold2);}
+  .vs-text{font-family:'Cinzel',serif;font-size:20px;color:var(--gold);opacity:0.5;text-align:center;}
 
-  .person-label { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 20px; text-align: center; }
-  .person-card.person-b .person-label { color: var(--pink); }
+  /* ① 未来訴求バナー */
+  .future-banner{background:linear-gradient(135deg,rgba(232,160,176,0.12),rgba(200,80,120,0.05));border:2px solid rgba(232,160,176,0.4);border-radius:16px;padding:20px;text-align:center;margin-bottom:20px;}
+  .future-label{font-family:'Cinzel',serif;font-size:10px;color:var(--pink);letter-spacing:4px;margin-bottom:10px;opacity:0.9;}
+  .future-items{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+  .future-item{background:rgba(232,160,176,0.08);border:1px solid rgba(232,160,176,0.2);border-radius:10px;padding:12px 10px;text-align:center;}
+  .future-item-icon{font-size:18px;margin-bottom:4px;}
+  .future-item-text{font-size:12px;color:rgba(240,234,220,0.8);line-height:1.5;}
 
-  .form-group { margin-bottom: 16px; }
-  label { display: block; font-size: 11px; color: var(--gold); letter-spacing: 2px; margin-bottom: 8px; }
-  .person-card.person-b label { color: var(--pink); }
+  .section{background:linear-gradient(135deg,rgba(26,32,64,0.9),rgba(15,22,40,0.95));border:1px solid rgba(201,168,76,0.2);border-radius:16px;padding:36px;margin-bottom:20px;}
+  .section-title{font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid rgba(201,168,76,0.15);}
+  .section-text{font-size:14px;line-height:2;color:rgba(240,234,220,0.85);}
+  .point-list{list-style:none;margin-top:14px;}
+  .point-list li{padding:10px 0;border-bottom:1px solid rgba(201,168,76,0.08);font-size:14px;color:rgba(240,234,220,0.85);display:flex;align-items:flex-start;gap:10px;line-height:1.7;}
+  .point-list li.good::before{content:'♥';color:var(--pink);font-size:12px;flex-shrink:0;margin-top:3px;}
+  .point-list li.care::before{content:'△';color:var(--gold);font-size:12px;flex-shrink:0;margin-top:3px;}
 
-  input[type="text"], input[type="date"] { width: 100%; background: rgba(10,14,26,0.6); border: 1px solid rgba(201,168,76,0.25); border-radius: 8px; padding: 12px 14px; color: var(--white); font-family: 'Noto Serif JP', serif; font-size: 14px; outline: none; transition: border-color 0.3s, box-shadow 0.3s; }
-  .person-card.person-b input[type="text"], .person-card.person-b input[type="date"] { border-color: rgba(232,160,176,0.2); }
-  input:focus { border-color: var(--gold) !important; box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
-  input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.7) sepia(1) saturate(3) hue-rotate(5deg); cursor: pointer; }
+  /* ③ 有料ブロック */
+  .premium-block{background:linear-gradient(135deg,rgba(26,32,64,0.9),rgba(15,22,40,0.95));border:1px solid rgba(201,168,76,0.2);border-radius:16px;margin-bottom:20px;overflow:hidden;}
+  .premium-header{padding:20px 36px;border-bottom:1px solid rgba(201,168,76,0.1);font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:3px;display:flex;align-items:center;gap:10px;}
+  .premium-badge{background:linear-gradient(135deg,var(--gold),#8a6a20);color:var(--navy);font-size:9px;font-weight:700;padding:3px 8px;border-radius:20px;}
+  .premium-preview{padding:24px 36px;position:relative;min-height:100px;}
+  .preview-text{font-size:14px;line-height:2;color:rgba(240,234,220,0.4);filter:blur(5px);user-select:none;pointer-events:none;}
+  .premium-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 0%,rgba(10,14,26,0.97) 45%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:20px;}
+  /* ② CTA文言変更 */
+  .unlock-btn{background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(201,168,76,0.05));border:1px solid rgba(201,168,76,0.5);border-radius:8px;color:var(--gold2);font-family:'Cinzel',serif;font-size:12px;letter-spacing:2px;padding:12px 28px;cursor:pointer;transition:all 0.3s;text-decoration:none;display:inline-block;}
+  .unlock-btn:hover{background:rgba(201,168,76,0.2);transform:translateY(-1px);}
 
-  .btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #8a6a20, var(--gold), #8a6a20); background-size: 200% 100%; border: none; border-radius: 8px; color: var(--navy); font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700; letter-spacing: 3px; cursor: pointer; transition: all 0.4s ease; margin-top: 8px; }
-  .btn:hover { background-position: 100% 0; box-shadow: 0 8px 30px rgba(201,168,76,0.35); transform: translateY(-1px); }
+  /* ⑤ 前世ブロック */
+  .pastlife-block{background:linear-gradient(135deg,rgba(20,30,60,0.95),rgba(10,15,35,0.98));border:1px solid rgba(127,212,196,0.25);border-radius:16px;padding:24px;margin-bottom:20px;}
+  .pastlife-label{font-family:'Cinzel',serif;font-size:10px;color:#7fd4c4;letter-spacing:3px;margin-bottom:12px;opacity:0.8;}
+  .pastlife-desc{font-size:13px;color:rgba(240,234,220,0.65);line-height:1.9;margin-bottom:12px;}
+  .pastlife-preview{font-size:13px;color:rgba(240,234,220,0.35);filter:blur(4px);user-select:none;pointer-events:none;position:relative;}
 
-  #result { display: none; animation: fadeUp 0.6s ease both; }
+  /* 2択CTA */
+  .two-cta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+  .cta-pay{display:flex;flex-direction:column;align-items:center;background:linear-gradient(135deg,rgba(232,160,176,0.15),rgba(200,80,120,0.06));border:1px solid rgba(232,160,176,0.45);border-radius:12px;padding:16px 10px;text-decoration:none;transition:all 0.3s;text-align:center;}
+  .cta-pay:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(232,160,176,0.2);}
+  .cta-line{display:flex;flex-direction:column;align-items:center;background:transparent;border:1px solid rgba(240,234,220,0.12);border-radius:12px;padding:16px 10px;text-decoration:none;transition:all 0.3s;text-align:center;}
+  .cta-line:hover{border-color:rgba(201,168,76,0.3);}
 
-  /* ハートスコア */
-  .score-card { background: linear-gradient(135deg, rgba(26,32,64,0.95), rgba(15,22,40,0.98)); border: 1px solid rgba(201,168,76,0.35); border-radius: 16px; padding: 40px 36px; text-align: center; margin-bottom: 24px; position: relative; overflow: hidden; }
-  .score-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at center, rgba(232,160,176,0.05) 0%, transparent 60%); pointer-events: none; }
+  /* 回遊 */
+  .rec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  .rec-card{background:rgba(10,14,26,0.5);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:14px 10px;text-align:center;text-decoration:none;transition:all 0.3s;display:block;}
+  .rec-card:hover{border-color:rgba(201,168,76,0.4);transform:translateY(-2px);}
 
-  .names-display { font-family: 'Cinzel', serif; font-size: 15px; color: var(--white); letter-spacing: 2px; margin-bottom: 24px; opacity: 0.8; }
-  .names-display .heart { color: var(--pink); margin: 0 10px; }
+  .bundle-banner{background:linear-gradient(135deg,rgba(100,80,30,0.3),rgba(60,40,10,0.4));border:1px solid rgba(201,168,76,0.4);border-radius:16px;padding:36px;text-align:center;margin-bottom:30px;}
+  .bundle-title{font-family:'Cinzel',serif;font-size:15px;color:var(--gold2);letter-spacing:3px;margin-bottom:12px;}
+  .bundle-desc{font-size:13px;color:rgba(240,234,220,0.6);line-height:1.8;margin-bottom:20px;}
+  .bundle-price{font-family:'Cinzel',serif;font-size:26px;color:var(--gold);margin-bottom:6px;}
+  .bundle-price-sub{font-size:12px;color:rgba(240,234,220,0.4);margin-bottom:20px;}
+  .bundle-btn{display:inline-block;background:linear-gradient(135deg,#8a6a20,var(--gold),#8a6a20);background-size:200% 100%;border-radius:8px;color:var(--navy);font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:2px;padding:14px 36px;cursor:pointer;border:none;transition:all 0.4s;text-decoration:none;}
+  .bundle-btn:hover{background-position:100% 0;box-shadow:0 8px 30px rgba(201,168,76,0.4);transform:translateY(-1px);}
 
-  .score-ring { position: relative; width: 160px; height: 160px; margin: 0 auto 24px; }
-  .score-ring svg { transform: rotate(-90deg); }
-  .score-ring circle { fill: none; stroke-width: 8; }
-  .ring-bg { stroke: rgba(201,168,76,0.1); }
-  .ring-fill { stroke: url(#ringGrad); stroke-linecap: round; transition: stroke-dashoffset 1.5s ease; }
-  .score-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
-  .score-num { font-family: 'Cinzel', serif; font-size: 42px; color: var(--gold2); line-height: 1; }
-  .score-pct { font-size: 16px; color: var(--gold); }
+  .footer{text-align:center;margin-top:60px;padding-top:30px;border-top:1px solid rgba(201,168,76,0.1);}
+  .footer-logo{font-family:'Cinzel',serif;font-size:11px;color:var(--gold);letter-spacing:4px;opacity:0.5;margin-bottom:8px;}
+  .footer-text{font-size:11px;color:rgba(240,234,220,0.25);}
 
-  .score-label { font-family: 'Cinzel', serif; font-size: 18px; color: var(--gold3); letter-spacing: 3px; margin-bottom: 8px; }
-  .score-desc { font-size: 13px; color: rgba(240,234,220,0.55); letter-spacing: 1px; }
-
-  /* 2人の星表示 */
-  .two-stars { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; margin-bottom: 20px; }
-  .mini-star { background: linear-gradient(135deg, rgba(26,32,64,0.9), rgba(15,22,40,0.95)); border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; padding: 20px 16px; text-align: center; }
-  .mini-star.star-b { border-color: rgba(232,160,176,0.2); }
-  .mini-symbol { font-size: 32px; margin-bottom: 8px; }
-  .mini-name { font-size: 11px; color: var(--gold); letter-spacing: 1px; margin-bottom: 4px; }
-  .mini-star.star-b .mini-name { color: var(--pink); }
-  .mini-num { font-family: 'Cinzel', serif; font-size: 22px; color: var(--gold2); }
-  .vs-text { font-family: 'Cinzel', serif; font-size: 20px; color: var(--gold); opacity: 0.5; text-align: center; }
-
-  .section { background: linear-gradient(135deg, rgba(26,32,64,0.9), rgba(15,22,40,0.95)); border: 1px solid rgba(201,168,76,0.2); border-radius: 16px; padding: 36px; margin-bottom: 20px; }
-  .section-title { font-family: 'Cinzel', serif; font-size: 12px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid rgba(201,168,76,0.15); }
-  .section-text { font-size: 14px; line-height: 2; color: rgba(240,234,220,0.85); }
-
-  .point-list { list-style: none; margin-top: 14px; }
-  .point-list li { padding: 10px 0; border-bottom: 1px solid rgba(201,168,76,0.08); font-size: 14px; color: rgba(240,234,220,0.85); display: flex; align-items: flex-start; gap: 10px; line-height: 1.7; }
-  .point-list li.good::before { content: '♥'; color: var(--pink); font-size: 12px; flex-shrink: 0; margin-top: 3px; }
-  .point-list li.care::before { content: '△'; color: var(--gold); font-size: 12px; flex-shrink: 0; margin-top: 3px; }
-
-  /* 有料ブロック */
-  .premium-block { background: linear-gradient(135deg, rgba(26,32,64,0.9), rgba(15,22,40,0.95)); border: 1px solid rgba(201,168,76,0.2); border-radius: 16px; margin-bottom: 20px; overflow: hidden; }
-  .premium-header { padding: 20px 36px; border-bottom: 1px solid rgba(201,168,76,0.1); font-family: 'Cinzel', serif; font-size: 12px; color: var(--gold); letter-spacing: 3px; display: flex; align-items: center; gap: 10px; }
-  .premium-badge { background: linear-gradient(135deg, var(--gold), #8a6a20); color: var(--navy); font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 20px; letter-spacing: 1px; }
-  .premium-preview { padding: 24px 36px; position: relative; min-height: 100px; }
-  .preview-text { font-size: 14px; line-height: 2; color: rgba(240,234,220,0.4); filter: blur(4px); user-select: none; pointer-events: none; }
-  .premium-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 0%, rgba(10,14,26,0.92) 60%); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 24px; }
-  .unlock-btn { background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05)); border: 1px solid rgba(201,168,76,0.5); border-radius: 8px; color: var(--gold2); font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px; padding: 12px 28px; cursor: pointer; transition: all 0.3s ease; text-decoration: none; display: inline-block; }
-  .unlock-btn:hover { background: linear-gradient(135deg, rgba(201,168,76,0.25), rgba(201,168,76,0.1)); border-color: var(--gold); box-shadow: 0 4px 20px rgba(201,168,76,0.2); }
-
-  .bundle-banner { background: linear-gradient(135deg, rgba(100,80,30,0.3), rgba(60,40,10,0.4)); border: 1px solid rgba(201,168,76,0.4); border-radius: 16px; padding: 36px; text-align: center; margin-bottom: 30px; }
-  .bundle-title { font-family: 'Cinzel', serif; font-size: 15px; color: var(--gold2); letter-spacing: 3px; margin-bottom: 12px; }
-  .bundle-desc { font-size: 13px; color: rgba(240,234,220,0.6); line-height: 1.8; margin-bottom: 20px; }
-  .bundle-price { font-family: 'Cinzel', serif; font-size: 22px; color: var(--gold); margin-bottom: 20px; }
-  .bundle-price span { font-size: 12px; color: rgba(240,234,220,0.5); }
-  .bundle-btn { display: inline-block; background: linear-gradient(135deg, #8a6a20, var(--gold), #8a6a20); background-size: 200% 100%; border-radius: 8px; color: var(--navy); font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; padding: 14px 36px; cursor: pointer; border: none; transition: all 0.4s ease; }
-  .bundle-btn:hover { background-position: 100% 0; box-shadow: 0 8px 30px rgba(201,168,76,0.4); transform: translateY(-1px); }
-
-  .footer { text-align: center; margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(201,168,76,0.1); }
-  .footer-logo { font-family: 'Cinzel', serif; font-size: 11px; color: var(--gold); letter-spacing: 4px; opacity: 0.5; margin-bottom: 8px; }
-  .footer-text { font-size: 11px; color: rgba(240,234,220,0.25); }
-
-  @keyframes fadeDown { from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);} }
-  @keyframes fadeUp { from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);} }
+  @keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 
   @media(max-width:480px){
-    .score-card, .section, .bundle-banner { padding: 28px 20px; }
-    .premium-header, .premium-preview { padding-left: 20px; padding-right: 20px; }
+    .score-card,.section,.bundle-banner{padding:24px 18px;}
+    .premium-header,.premium-preview{padding-left:18px;padding-right:18px;}
+    .two-cta{grid-template-columns:1fr;}
+    .future-items{grid-template-columns:1fr;}
   }
 </style>
 </head>
 <body>
-<!-- Twinkle Star Oracle ヘッダー -->
+<!-- ヘッダー -->
 <div style="position:sticky;top:0;z-index:1000;background:linear-gradient(135deg,rgba(10,14,26,0.97),rgba(15,20,40,0.98));border-bottom:1px solid rgba(201,168,76,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;">
   <a href="https://twinkle-lab.jp/star" style="font-size:12px;color:rgba(201,168,76,0.7);text-decoration:none;letter-spacing:1px;">← ポータルに戻る</a>
   <div style="font-family:Cinzel,serif;font-size:12px;color:#c9a84c;letter-spacing:2px;text-align:center;">✦ Twinkle Star Oracle ✦</div>
   <a href="https://twinkle-lab.jp/star/sogo" style="font-size:11px;color:rgba(201,168,76,0.7);text-decoration:none;letter-spacing:1px;">完全鑑定</a>
 </div>
 
-
 <div class="stars" id="stars"></div>
-
 <div class="container">
 
   <header class="header">
@@ -148,32 +153,19 @@
   <div class="two-col">
     <div class="person-card">
       <div class="person-label">✦ Person A</div>
-      <div class="form-group">
-        <label>お名前</label>
-        <input type="text" id="name-a" placeholder="例：さくら" />
-      </div>
-      <div class="form-group">
-        <label>生年月日</label>
-        <input type="date" id="birth-a" />
-      </div>
+      <div class="form-group"><label>お名前</label><input type="text" id="name-a" placeholder="例：さくら" /></div>
+      <div class="form-group"><label>生年月日</label><input type="date" id="birth-a" /></div>
     </div>
     <div class="person-card person-b">
       <div class="person-label">♥ Person B</div>
-      <div class="form-group">
-        <label>お名前</label>
-        <input type="text" id="name-b" placeholder="例：たろう" />
-      </div>
-      <div class="form-group">
-        <label>生年月日</label>
-        <input type="date" id="birth-b" />
-      </div>
+      <div class="form-group"><label>お名前</label><input type="text" id="name-b" placeholder="例：たろう" /></div>
+      <div class="form-group"><label>生年月日</label><input type="date" id="birth-b" /></div>
     </div>
   </div>
 
   <button class="btn" onclick="calculate()">✦ 相性を鑑定する ✦</button>
 
   <div id="result">
-
     <div style="height:24px"></div>
 
     <!-- スコアカード -->
@@ -183,7 +175,6 @@
         <span class="heart">♥</span>
         <span id="disp-name-b">B</span>
       </div>
-
       <div class="score-ring">
         <svg width="160" height="160" viewBox="0 0 160 160">
           <defs>
@@ -193,15 +184,13 @@
             </linearGradient>
           </defs>
           <circle class="ring-bg" cx="80" cy="80" r="68"/>
-          <circle class="ring-fill" id="ring-fill" cx="80" cy="80" r="68"
-            stroke-dasharray="427" stroke-dashoffset="427"/>
+          <circle class="ring-fill" id="ring-fill" cx="80" cy="80" r="68" stroke-dasharray="427" stroke-dashoffset="427"/>
         </svg>
         <div class="score-text">
           <div class="score-num" id="score-num">0</div>
           <div class="score-pct">%</div>
         </div>
       </div>
-
       <div class="score-label" id="score-label">運命の出会い</div>
       <div class="score-desc" id="score-desc">深い絆で結ばれた二人</div>
     </div>
@@ -221,148 +210,175 @@
       </div>
     </div>
 
-    <!-- 無料：相性の特徴 -->
+    <!-- ① 未来訴求バナー（新規追加） -->
+    <div class="future-banner">
+      <div class="future-label">✦ THE FUTURE OF THIS RELATIONSHIP ✦</div>
+      <div style="font-size:14px;color:rgba(240,234,220,0.8);margin-bottom:14px;">この関係の未来が見えています</div>
+      <div class="future-items">
+        <div class="future-item">
+          <div class="future-item-icon">💍</div>
+          <div class="future-item-text">結婚の可能性<br><span style="color:rgba(232,160,176,0.6);font-size:10px;">有料で詳しく見る</span></div>
+        </div>
+        <div class="future-item">
+          <div class="future-item-icon">💕</div>
+          <div class="future-item-text">恋が動くタイミング<br><span style="color:rgba(232,160,176,0.6);font-size:10px;">有料で詳しく見る</span></div>
+        </div>
+        <div class="future-item">
+          <div class="future-item-icon">💔</div>
+          <div class="future-item-text">別れの可能性<br><span style="color:rgba(232,160,176,0.6);font-size:10px;">有料で詳しく見る</span></div>
+        </div>
+        <div class="future-item">
+          <div class="future-item-icon">🔮</div>
+          <div class="future-item-text">この恋の結末<br><span style="color:rgba(232,160,176,0.6);font-size:10px;">有料で詳しく見る</span></div>
+        </div>
+      </div>
+      <!-- ② CTA変更「この恋の結末を知る」 -->
+      <a href="https://buy.stripe.com/00w14g2j46C66oBcFl33W04" target="_blank" style="display:inline-block;background:linear-gradient(135deg,#8a3050,#e8a0b0);border-radius:8px;color:#fff;font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:1px;padding:13px 28px;text-decoration:none;">♥ この恋の結末を知る（¥500）</a>
+    </div>
+
+    <!-- 相性の特徴（全文表示） -->
     <div class="section">
       <div class="section-title">✦ 二人の相性の特徴</div>
-      <p class="section-text" id="compat-desc"></p><div style="position:relative;margin-top:12px;"><p class="section-text" id="compat-desc-blur" style="filter:blur(5px);user-select:none;pointer-events:none;opacity:0.5;"></p><div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 0%,rgba(10,14,26,0.97) 50%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px;"><a href="https://lin.ee/XHDFrA8" target="_blank" style="background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(201,168,76,0.05));border:1px solid rgba(201,168,76,0.5);border-radius:8px;color:#e8c97a;font-family:Cinzel,serif;font-size:12px;letter-spacing:2px;padding:12px 24px;text-decoration:none;display:inline-block;">🌟 恋愛・仕事・金運の完全診断を無料で受け取る</a></div></div>
+      <p class="section-text" id="compat-desc"></p>
       <ul class="point-list" id="good-points"></ul>
     </div>
 
-    <!-- 無料：注意点 -->
+    <!-- 注意点 -->
     <div class="section">
       <div class="section-title">✦ 気をつけたいこと</div>
       <ul class="point-list" id="care-points"></ul>
     </div>
 
-    <!-- 有料：恋愛相性詳細 -->
+    <!-- ③ 有料：結婚の可能性（新） -->
     <div class="premium-block">
-      <div class="premium-header">
-        ✦ 恋愛・結婚の詳細相性
-        <span class="premium-badge">PREMIUM</span>
-      </div>
+      <div class="premium-header">♥ 結婚の可能性と最適なタイミング <span class="premium-badge">PREMIUM</span></div>
       <div class="premium-preview">
-        <p class="preview-text">二人の恋愛パターンと結婚後の関係性を詳しく分析。どんな時に惹かれ合い、どんな時にすれ違いやすいかを具体的に...</p>
+        <p class="preview-text">二人の星の組み合わせが示す結婚の可能性と、プロポーズに最も適した月・タイミングをお伝えします。また、結婚後の関係性がどう変化するか、幸せな夫婦になるための最重要ポイントとは...</p>
         <div class="premium-overlay">
-          <a href="https://lin.ee/XHDFrA8" target="_blank" class="unlock-btn">✦ 詳細鑑定を見る（¥500）</a>
+          <a href="https://buy.stripe.com/00w14g2j46C66oBcFl33W04" target="_blank" class="unlock-btn">♥ この恋の結末を知る（¥500）</a>
         </div>
       </div>
     </div>
 
-    <!-- 有料：ビジネス相性 -->
+    <!-- ③ 有料：恋が動くタイミング（新） -->
     <div class="premium-block">
-      <div class="premium-header">
-        ✦ 仕事・ビジネスの相性
-        <span class="premium-badge">PREMIUM</span>
-      </div>
+      <div class="premium-header">♥ 恋が動くタイミングと告白の最適月 <span class="premium-badge">PREMIUM</span></div>
       <div class="premium-preview">
-        <p class="preview-text">仕事上のパートナーとして、二人がどのように補い合えるかを解説。チームとして最大限の力を発揮するための...</p>
+        <p class="preview-text">今年、この恋が最も動きやすい月はいつなのかをお伝えします。告白・アプローチ・関係を深めるための最適タイミングと、逆に避けるべき時期を九星気学と数秘術で詳しく分析します...</p>
         <div class="premium-overlay">
-          <a href="https://lin.ee/XHDFrA8" target="_blank" class="unlock-btn">✦ 詳細鑑定を見る（¥500）</a>
+          <a href="https://buy.stripe.com/00w14g2j46C66oBcFl33W04" target="_blank" class="unlock-btn">♥ この恋の結末を知る（¥500）</a>
         </div>
       </div>
     </div>
 
-    <!-- 有料：関係改善アドバイス -->
+    <!-- ③ 有料：別れの可能性と関係の危機 -->
     <div class="premium-block">
-      <div class="premium-header">
-        ✦ 関係を深める開運アドバイス
-        <span class="premium-badge">PREMIUM</span>
-      </div>
+      <div class="premium-header">♥ 別れの可能性と関係の危機を乗り越えるには <span class="premium-badge">PREMIUM</span></div>
       <div class="premium-preview">
-        <p class="preview-text">二人の関係をより深めるための具体的なアドバイス。二人に合ったデート場所、ラッキーな日、避けた方がいい...</p>
+        <p class="preview-text">二人の相性で最も問題になりやすい時期と、その乗り越え方をお伝えします。すれ違いが起きやすい状況のパターンと、関係が壊れる前にすべき具体的な行動、そして別れを回避するための...</p>
         <div class="premium-overlay">
-          <a href="https://lin.ee/XHDFrA8" target="_blank" class="unlock-btn">✦ 詳細鑑定を見る（¥500）</a>
+          <a href="https://buy.stripe.com/00w14g2j46C66oBcFl33W04" target="_blank" class="unlock-btn">♥ この恋の結末を知る（¥500）</a>
         </div>
       </div>
     </div>
 
-    
+    <!-- ⑤ 前世ストーリーブロック -->
+    <div class="pastlife-block">
+      <div class="pastlife-label">✦ PAST LIFE CONNECTION ✦</div>
+      <div style="font-size:14px;color:#a8ece0;font-weight:500;margin-bottom:10px;">前世での二人の関係</div>
+      <div class="pastlife-desc">二人の出会いは偶然ではありません。魂のレベルで繰り返し引き合う深い縁があります。前世での二人の関係を知ることで、今世でこの人に惹かれる理由がわかります。</div>
+      <div style="position:relative;margin-top:8px;">
+        <div class="pastlife-preview">前世で二人は深いつながりを持っていました。一方が守り、一方が導く関係だったようです。今世でも似たパターンが現れており、その前世のカルマが今の恋愛に影響を...</div>
+        <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 0%,rgba(10,15,35,0.97) 40%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:12px;">
+          <a href="https://buy.stripe.com/00w14g2j46C66oBcFl33W04" target="_blank" style="background:rgba(127,212,196,0.1);border:1px solid rgba(127,212,196,0.4);border-radius:20px;color:#a8ece0;font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;padding:8px 20px;text-decoration:none;">✦ 前世での二人の関係を知る（¥500）</a>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:40px;">
+        <a href="https://pastlife-app.vercel.app" target="_blank" style="display:inline-block;background:rgba(127,212,196,0.08);border:1px solid rgba(127,212,196,0.3);border-radius:20px;color:#a8ece0;font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;padding:8px 20px;text-decoration:none;">🌸 前世リーディングも見てみる（無料）</a>
+      </div>
+    </div>
 
-<!-- 2択導線ブロック -->
-<div style="margin:20px 0;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-  <!-- ¥500即決ブロック -->
-  <div style="background:linear-gradient(135deg,rgba(60,40,10,0.5),rgba(40,20,5,0.6));border:1px solid rgba(201,168,76,0.4);border-radius:14px;padding:20px;text-align:center;">
-    <div style="font-size:11px;color:rgba(240,234,220,0.5);letter-spacing:1px;margin-bottom:8px;">今すぐ詳しく知る</div>
-    <div style="font-size:14px;color:#f0eadc;font-weight:500;margin-bottom:8px;">今の悩みを1テーマで深く鑑定</div>
-    <div style="font-family:Cinzel,serif;font-size:24px;color:#c9a84c;margin-bottom:12px;">¥500</div>
-    <a href="https://twinkle-lab.jp/star/mini" style="display:block;background:linear-gradient(135deg,#8a6a20,#c9a84c,#8a6a20);border-radius:8px;color:#0a0e1a;font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:12px;text-decoration:none;margin-bottom:8px;">今すぐ詳しく見る</a>
-    <div style="font-size:10px;color:rgba(240,234,220,0.3);letter-spacing:1px;">すぐに結果が表示されます</div>
-  </div>
-  <!-- LINEじっくりブロック -->
-  <div style="background:linear-gradient(135deg,rgba(26,32,64,0.8),rgba(15,22,40,0.9));border:1px solid rgba(155,127,212,0.3);border-radius:14px;padding:20px;text-align:center;">
-    <div style="font-size:11px;color:rgba(240,234,220,0.5);letter-spacing:1px;margin-bottom:8px;">じっくり知りたい方へ</div>
-    <div style="font-size:14px;color:#f0eadc;font-weight:500;margin-bottom:8px;">恋愛・仕事・金運の未来を無料で受け取る</div>
-    <div style="font-family:Cinzel,serif;font-size:24px;color:#c4a8f0;margin-bottom:12px;">無料</div>
-    <a href="https://lin.ee/XHDFrA8" target="_blank" style="display:block;background:linear-gradient(135deg,rgba(155,127,212,0.3),rgba(100,70,180,0.4));border:1px solid rgba(155,127,212,0.5);border-radius:8px;color:#c4a8f0;font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:12px;text-decoration:none;margin-bottom:8px;">無料で未来を受け取る</a>
-    <div style="font-size:10px;color:rgba(240,234,220,0.3);letter-spacing:1px;">LINEで受け取れます</div>
-  </div>
-</div>
-<!-- 共通導線 -->
-<div style="background:linear-gradient(135deg,rgba(26,32,64,0.7),rgba(15,22,40,0.8));border:1px solid rgba(201,168,76,0.15);border-radius:12px;padding:20px;text-align:center;margin-bottom:20px;">
-  <div style="font-size:13px;color:rgba(240,234,220,0.6);margin-bottom:12px;">さらに深く知りたい方へ</div>
-  <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:14px;">
-    <div style="font-size:12px;color:rgba(240,234,220,0.5);">✦ 1テーマ集中 → ¥500</div>
-    <div style="font-size:12px;color:rgba(240,234,220,0.5);">✦ 人生全体 → ¥3,980</div>
-  </div>
-  <a href="https://twinkle-lab.jp/star/sogo" style="display:inline-block;background:linear-gradient(135deg,#8a6a20,#c9a84c,#8a6a20);border-radius:8px;color:#0a0e1a;font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:1px;padding:13px 28px;text-decoration:none;">✦ 完全鑑定はこちら（¥3,980）</a>
-  <div style="font-size:11px;color:rgba(240,234,220,0.3);margin-top:8px;">即時表示 · PDFダウンロード付き</div>
-</div>
-<!-- 無料→有料誘導 -->
-<div style="text-align:center;padding:20px;margin-bottom:8px;">
-  <div style="font-size:13px;color:rgba(240,234,220,0.5);margin-bottom:6px;">ここまでは表面の結果です</div>
-  <div style="font-size:16px;color:#f5e0a0;font-weight:500;">🔮 本当の運命はここからです</div>
-</div>
+    <!-- 下部CTA（強め）：2択 + ¥1,980 -->
+    <div style="background:linear-gradient(135deg,rgba(26,32,64,0.95),rgba(15,22,40,0.98));border:1px solid rgba(232,160,176,0.35);border-radius:16px;padding:24px;margin-bottom:20px;text-align:center;">
+      <div style="font-family:'Cinzel',serif;font-size:12px;color:var(--pink);letter-spacing:3px;margin-bottom:16px;">♥ この恋の結末を知る ♥</div>
+      <div class="two-cta">
+        <!-- ② CTA変更 -->
+        <a href="https://buy.stripe.com/00w14g2j46C66oBcFl33W04" target="_blank" class="cta-pay">
+          <div style="font-size:9px;color:rgba(232,160,176,0.7);letter-spacing:2px;margin-bottom:4px;">即・結果表示</div>
+          <div style="font-size:12px;color:var(--white);font-weight:600;margin-bottom:6px;">この恋の結末を知る</div>
+          <div style="font-family:'Cinzel',serif;font-size:20px;color:var(--pink);">¥500</div>
+          <div style="margin-top:8px;background:linear-gradient(135deg,#8a3050,#e8a0b0);color:#fff;font-size:11px;font-weight:700;border-radius:8px;padding:6px 12px;">♥ 今すぐ知る</div>
+        </a>
+        <!-- ④ LINE はサブ -->
+        <a href="https://lin.ee/XHDFrA8" target="_blank" class="cta-line">
+          <div style="font-size:9px;color:rgba(240,234,220,0.4);letter-spacing:2px;margin-bottom:4px;">無料・後追い</div>
+          <div style="font-size:12px;color:rgba(240,234,220,0.7);margin-bottom:6px;">じっくり知りたい方へ</div>
+          <div style="font-family:'Cinzel',serif;font-size:20px;color:#7ac4a0;">¥0</div>
+          <div style="margin-top:8px;background:linear-gradient(135deg,#1a7a3c,#2a8a50);color:#fff;font-size:11px;font-weight:700;border-radius:8px;padding:6px 12px;">💬 無料で受け取る</div>
+        </a>
+      </div>
+      <!-- ⑥ ¥1,980直課金（LINE → Stripe） -->
+      <a href="https://buy.stripe.com/14A8wIbTEf8C9ANfRx33W03" target="_blank" style="display:block;margin-top:10px;background:linear-gradient(135deg,rgba(100,60,140,0.2),rgba(60,30,80,0.15));border:1px solid rgba(155,89,182,0.35);border-radius:12px;padding:14px 16px;text-decoration:none;text-align:center;transition:all 0.3s;">
+        <div style="font-size:10px;color:#c4a8f0;letter-spacing:2px;margin-bottom:3px;">3テーマ詳細鑑定</div>
+        <div style="font-size:13px;color:var(--white);font-weight:500;">恋愛・仕事・金運をまとめて（¥1,980）</div>
+        <div style="font-size:11px;color:rgba(240,234,220,0.4);margin-top:3px;">即時表示 · PDFダウンロード付き</div>
+      </a>
+    </div>
 
-<!-- 回遊導線・おすすめの占い -->
-<div style="background:linear-gradient(135deg,rgba(26,32,64,0.85),rgba(15,22,40,0.9));border:1px solid rgba(201,168,76,0.18);border-radius:16px;padding:24px;margin-bottom:20px;">
-  <div style="font-family:Cinzel,serif;font-size:11px;color:#c9a84c;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;text-align:center;">✦ 次にチェックしたい占い ✦</div>
-  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
-    <a href="https://tarot-app-rouge.vercel.app" target="_blank" style="background:rgba(10,14,26,0.5);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:14px 10px;text-align:center;text-decoration:none;transition:all 0.3s;">
-      <span style="font-size:22px;display:block;margin-bottom:6px;">🃏</span>
-      <div style="font-size:12px;color:#f0eadc;font-weight:500;">タロット占い</div>
-      <div style="font-size:10px;color:rgba(240,234,220,0.4);margin-top:2px;">今日のカードを引く</div>
-    </a>
-    <a href="https://iching-app-sigma.vercel.app" target="_blank" style="background:rgba(10,14,26,0.5);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:14px 10px;text-align:center;text-decoration:none;transition:all 0.3s;">
-      <span style="font-size:22px;display:block;margin-bottom:6px;">☯</span>
-      <div style="font-size:12px;color:#f0eadc;font-weight:500;">易占い</div>
-      <div style="font-size:10px;color:rgba(240,234,220,0.4);margin-top:2px;">問いを立てて占う</div>
-    </a>
-    <a href="https://pastlife-app.vercel.app" target="_blank" style="background:rgba(10,14,26,0.5);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:14px 10px;text-align:center;text-decoration:none;transition:all 0.3s;">
-      <span style="font-size:22px;display:block;margin-bottom:6px;">🌸</span>
-      <div style="font-size:12px;color:#f0eadc;font-weight:500;">前世リーディング</div>
-      <div style="font-size:10px;color:rgba(240,234,220,0.4);margin-top:2px;">魂の記憶を知る</div>
-    </a>
-    <a href="https://twinkle-lab.jp/star/sogo" target="_blank" style="background:linear-gradient(135deg,rgba(60,40,10,0.5),rgba(40,20,5,0.6));border:1px solid rgba(201,168,76,0.35);border-radius:10px;padding:14px 10px;text-align:center;text-decoration:none;transition:all 0.3s;">
-      <span style="font-size:22px;display:block;margin-bottom:6px;">🔮</span>
-      <div style="font-size:12px;color:#e8c97a;font-weight:600;">AI総合鑑定</div>
-      <div style="font-size:10px;color:rgba(232,201,122,0.6);margin-top:2px;">¥3,980・完全解析</div>
-    </a>
-  </div>
-</div>
-<div class="bundle-banner">
-      <div class="bundle-title">✦ カップル総合鑑定パック ✦</div>
-      <p class="bundle-desc">相性占い ＋ 数秘術 ＋ タロット<br>二人の未来をより深く読み解きます</p>
-      <div class="bundle-price">¥1,980 <span>（通常 ¥3,000）</span></div>
-      <a href="https://lin.ee/XHDFrA8" target="_blank" class="bundle-btn">✦ 総合鑑定を申し込む ✦</a>
+    <!-- AI総合鑑定 -->
+    <div class="bundle-banner">
+      <div class="bundle-title">✦ AI総合鑑定 ✦</div>
+      <p class="bundle-desc">ホロスコープ ＋ 四柱推命 ＋ タロット3枚 ＋ 数秘術<br>過去・現在・未来をAIが完全解析します</p>
+      <div class="bundle-price">¥3,980</div>
+      <div class="bundle-price-sub">即時表示 · PDFダウンロード付き · 🔒 安全な決済</div>
+      <a href="https://twinkle-lab.jp/star/sogo" class="bundle-btn">✦ AI総合鑑定を受ける ✦</a>
+    </div>
+
+    <!-- 回遊導線 -->
+    <div style="background:linear-gradient(135deg,rgba(26,32,64,0.85),rgba(15,22,40,0.9));border:1px solid rgba(201,168,76,0.18);border-radius:16px;padding:24px;margin-bottom:20px;">
+      <div style="font-family:'Cinzel',serif;font-size:11px;color:#c9a84c;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;text-align:center;">✦ あなたにおすすめの占い ✦</div>
+      <div class="rec-grid">
+        <a href="https://tarot-app-rouge.vercel.app" target="_blank" class="rec-card">
+          <span style="font-size:22px;display:block;margin-bottom:6px;">🃏</span>
+          <div style="font-size:12px;color:#f0eadc;font-weight:500;">タロット占い</div>
+          <div style="font-size:10px;color:rgba(240,234,220,0.4);margin-top:2px;">今の状況をカードが教える</div>
+          <div style="display:inline-block;font-size:9px;color:#7ac4a0;border:1px solid rgba(122,196,160,0.3);border-radius:8px;padding:2px 8px;margin-top:4px;">FREE</div>
+        </a>
+        <a href="https://pastlife-app.vercel.app" target="_blank" class="rec-card">
+          <span style="font-size:22px;display:block;margin-bottom:6px;">🌸</span>
+          <div style="font-size:12px;color:#f0eadc;font-weight:500;">前世リーディング</div>
+          <div style="font-size:10px;color:rgba(240,234,220,0.4);margin-top:2px;">二人の魂の縁を知る</div>
+          <div style="display:inline-block;font-size:9px;color:#7ac4a0;border:1px solid rgba(122,196,160,0.3);border-radius:8px;padding:2px 8px;margin-top:4px;">FREE</div>
+        </a>
+        <a href="https://numerology-app-lovat.vercel.app" target="_blank" class="rec-card">
+          <span style="font-size:22px;display:block;margin-bottom:6px;">🔢</span>
+          <div style="font-size:12px;color:#f0eadc;font-weight:500;">数秘術</div>
+          <div style="font-size:10px;color:rgba(240,234,220,0.4);margin-top:2px;">運命数から使命を知る</div>
+          <div style="display:inline-block;font-size:9px;color:#7ac4a0;border:1px solid rgba(122,196,160,0.3);border-radius:8px;padding:2px 8px;margin-top:4px;">FREE</div>
+        </a>
+        <a href="https://twinkle-lab.jp/star/sogo" class="rec-card" style="background:linear-gradient(135deg,rgba(60,40,10,0.5),rgba(40,20,5,0.6));border-color:rgba(201,168,76,0.35);">
+          <span style="font-size:22px;display:block;margin-bottom:6px;">🔮</span>
+          <div style="font-size:12px;color:#e8c97a;font-weight:600;">AI総合鑑定</div>
+          <div style="font-size:10px;color:rgba(232,201,122,0.6);margin-top:2px;">¥3,980 · 完全解析</div>
+        </a>
+      </div>
     </div>
 
   </div>
 
   <footer class="footer">
     <div class="footer-logo">✦ TWINKLE STAR ORACLE ✦</div>
-    <p class="footer-text">© 2024 Twinkle Lab. All rights reserved.</p>
+    <p class="footer-text">© 2026 Twinkle Lab. All rights reserved.</p>
   </footer>
-
 </div>
 
 <script>
-// 星生成
 (function(){
   const c = document.getElementById('stars');
   for(let i=0;i<80;i++){
     const s = document.createElement('div');
-    s.className = 'star';
-    const sz = Math.random()*2.5+0.5;
+    s.className='star';
+    const sz=Math.random()*2.5+0.5;
     s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--dur:${Math.random()*4+2}s;animation-delay:${Math.random()*4}s;opacity:${Math.random()*0.5+0.1};`;
     c.appendChild(s);
   }
@@ -376,7 +392,6 @@ const starData = {
   9:{name:'九紫火星',symbol:'☲'}
 };
 
-// 相性テーブル（九星×九星）
 const compatTable = {
   '1-1':{score:72,label:'深い共鳴',desc:'同じ感受性を持つ二人は、言葉にしなくても通じ合える部分が多いでしょう。互いの気持ちを繊細に察し合える関係です。',goods:['感受性が似ていて自然と理解し合える','一緒にいると心が落ち着く安らぎの関係','芸術や感性を共有できる'],cares:['どちらも感情を抱え込みやすいため、定期的な対話を','繊細さゆえにすれ違いが長引くことも']},
   '1-2':{score:68,label:'補い合う絆',desc:'水と大地のように、異なる性質が互いを補い合う関係です。一白の感受性と二黒の安定感が合わさり、深い信頼関係を築けます。',goods:['一白の感性を二黒がしっかり支える','二黒の安定感が一白に安心感を与える','長く付き合うほど絆が深まる'],cares:['一白が繊細すぎると二黒は戸惑うことも','価値観の違いを丁寧に伝え合うことが大切']},
@@ -389,95 +404,87 @@ const compatTable = {
   '1-9':{score:82,label:'輝き合う縁',desc:'水と火という対極の性質ですが、互いを高め合う特別な相性。九紫の輝きと一白の深さが魅力的なコントラストを生みます。',goods:['互いの違いが最高の魅力に','九紫の情熱が一白を輝かせる','強く惹かれ合う不思議な縁'],cares:['感情的になりやすい組み合わせ','違いを個性として受け入れることが鍵']},
 };
 
-function getCompatKey(a, b) {
-  const min = Math.min(a, b), max = Math.max(a, b);
-  return `${min}-${max}`;
+function getCompatKey(a,b){const min=Math.min(a,b),max=Math.max(a,b);return`${min}-${max}`;}
+
+function getKijuStar(year,month,day){
+  const adjMonth=(month===2&&day<4)?1:month;
+  const baseYear=adjMonth<=1?year-1:year;
+  const rem=(11-(baseYear%9))%9;
+  return rem===0?9:rem;
 }
 
-function getKijuStar(year, month, day) {
-  const adjMonth = (month === 2 && day < 4) ? 1 : month;
-  const baseYear = adjMonth <= 1 ? year - 1 : year;
-  const rem = (11 - (baseYear % 9)) % 9;
-  return rem === 0 ? 9 : rem;
+function calcDestiny(dateStr){
+  const digits=dateStr.replace(/-/g,'').split('').map(Number);
+  let sum=digits.reduce((a,b)=>a+b,0);
+  while(sum>9){sum=String(sum).split('').map(Number).reduce((a,b)=>a+b,0);}
+  return sum||9;
 }
 
-function calcDestiny(dateStr) {
-  const digits = dateStr.replace(/-/g,'').split('').map(Number);
-  let sum = digits.reduce((a,b)=>a+b,0);
-  while(sum>9){ sum = String(sum).split('').map(Number).reduce((a,b)=>a+b,0); }
-  return sum || 9;
+function animateScore(target){
+  let current=0;
+  const step=target/60;
+  const timer=setInterval(()=>{
+    current=Math.min(current+step,target);
+    document.getElementById('score-num').textContent=Math.round(current);
+    const offset=427*(1-current/100);
+    document.getElementById('ring-fill').style.strokeDashoffset=offset;
+    if(current>=target)clearInterval(timer);
+  },16);
 }
 
-function animateScore(target) {
-  let current = 0;
-  const step = target / 60;
-  const timer = setInterval(() => {
-    current = Math.min(current + step, target);
-    document.getElementById('score-num').textContent = Math.round(current);
-    const offset = 427 * (1 - current / 100);
-    document.getElementById('ring-fill').style.strokeDashoffset = offset;
-    if (current >= target) clearInterval(timer);
-  }, 16);
-}
+function calculate(){
+  const birthA=document.getElementById('birth-a').value;
+  const birthB=document.getElementById('birth-b').value;
+  if(!birthA||!birthB){alert('二人の生年月日を入力してください');return;}
 
-function calculate() {
-  const birthA = document.getElementById('birth-a').value;
-  const birthB = document.getElementById('birth-b').value;
-  if (!birthA || !birthB) { alert('二人の生年月日を入力してください'); return; }
+  const nameA=document.getElementById('name-a').value||'Aさん';
+  const nameB=document.getElementById('name-b').value||'Bさん';
+  const [yA,mA,dA]=birthA.split('-').map(Number);
+  const [yB,mB,dB]=birthB.split('-').map(Number);
+  const starA=getKijuStar(yA,mA,dA);
+  const starB=getKijuStar(yB,mB,dB);
+  const numA=calcDestiny(birthA);
+  const numB=calcDestiny(birthB);
 
-  const nameA = document.getElementById('name-a').value || 'Aさん';
-  const nameB = document.getElementById('name-b').value || 'Bさん';
-
-  const [yA, mA, dA] = birthA.split('-').map(Number);
-  const [yB, mB, dB] = birthB.split('-').map(Number);
-
-  const starA = getKijuStar(yA, mA, dA);
-  const starB = getKijuStar(yB, mB, dB);
-  const numA = calcDestiny(birthA);
-  const numB = calcDestiny(birthB);
-
-  const key = getCompatKey(starA, starB);
-  const compat = compatTable[key] || {
-    score: 65, label: '縁ある二人',
-    desc: '二人の星の組み合わせは独特の魅力を持っています。互いの違いを理解し尊重することで、深い絆を築けるでしょう。',
-    goods: ['互いの個性が補い合える', '一緒に成長できる関係', '時間をかけて深まる絆'],
-    cares: ['最初は価値観の違いを感じることも', 'コミュニケーションを大切に']
+  const key=getCompatKey(starA,starB);
+  const compat=compatTable[key]||{
+    score:65,label:'縁ある二人',
+    desc:'二人の星の組み合わせは独特の魅力を持っています。互いの違いを理解し尊重することで、深い絆を築けるでしょう。',
+    goods:['互いの個性が補い合える','一緒に成長できる関係','時間をかけて深まる絆'],
+    cares:['最初は価値観の違いを感じることも','コミュニケーションを大切に']
   };
 
-  document.getElementById('disp-name-a').textContent = nameA;
-  document.getElementById('disp-name-b').textContent = nameB;
-  document.getElementById('symbol-a').textContent = starData[starA].symbol;
-  document.getElementById('starname-a').textContent = starData[starA].name;
-  document.getElementById('num-a').textContent = numA;
-  document.getElementById('symbol-b').textContent = starData[starB].symbol;
-  document.getElementById('starname-b').textContent = starData[starB].name;
-  document.getElementById('num-b').textContent = numB;
+  document.getElementById('disp-name-a').textContent=nameA;
+  document.getElementById('disp-name-b').textContent=nameB;
+  document.getElementById('symbol-a').textContent=starData[starA].symbol;
+  document.getElementById('starname-a').textContent=starData[starA].name;
+  document.getElementById('num-a').textContent=numA;
+  document.getElementById('symbol-b').textContent=starData[starB].symbol;
+  document.getElementById('starname-b').textContent=starData[starB].name;
+  document.getElementById('num-b').textContent=numB;
+  document.getElementById('score-label').textContent=compat.label;
+  document.getElementById('score-desc').textContent=compat.desc;
+  document.getElementById('compat-desc').textContent=compat.desc;
 
-  document.getElementById('score-label').textContent = compat.label;
-  document.getElementById('score-desc').textContent = compat.desc;
-  var half = Math.floor(compat.desc.length/2); document.getElementById('compat-desc').textContent = compat.desc.substring(0,half); document.getElementById('compat-desc-blur').textContent = compat.desc.substring(half);
+  const goodEl=document.getElementById('good-points');
+  goodEl.innerHTML=compat.goods.map(g=>`<li class="good">${g}</li>`).join('');
+  const careEl=document.getElementById('care-points');
+  careEl.innerHTML=compat.cares.map(c=>`<li class="care">${c}</li>`).join('');
 
-  const goodEl = document.getElementById('good-points');
-  goodEl.innerHTML = compat.goods.map(g=>`<li class="good">${g}</li>`).join('');
-
-  const careEl = document.getElementById('care-points');
-  careEl.innerHTML = compat.cares.map(c=>`<li class="care">${c}</li>`).join('');
-
-  const result = document.getElementById('result');
-  result.style.display = 'block';
-  result.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-  setTimeout(() => animateScore(compat.score), 300);
+  const result=document.getElementById('result');
+  result.style.display='block';
+  result.scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(()=>animateScore(compat.score),300);
 }
 </script>
 
-<!-- 固定LINEバナー -->
-<div id="fixed-line-banner" style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#1a0a20,#0a0e1a);border-top:1px solid rgba(201,168,76,0.4);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 -4px 20px rgba(0,0,0,0.4);">
+<!-- 固定バナー：¥500直課金 -->
+<div style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#1a0a20,#0a0e1a);border-top:1px solid rgba(232,160,176,0.4);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 -4px 20px rgba(0,0,0,0.4);">
   <div style="flex:1;">
-    <div style="font-size:11px;color:rgba(240,234,220,0.5);letter-spacing:1px;margin-bottom:2px;">🌟 完全無料</div>
-    <div style="font-size:13px;color:#f0eadc;font-weight:500;line-height:1.4;">恋愛・仕事・金運の完全診断を受け取る</div>
+    <div style="font-size:11px;color:rgba(240,234,220,0.5);letter-spacing:1px;margin-bottom:2px;">♥ 即・結果表示</div>
+    <div style="font-size:13px;color:#f0eadc;font-weight:500;line-height:1.4;">この恋の結末を知る（¥500）</div>
   </div>
-  <a href="https://lin.ee/XHDFrA8" target="_blank" style="background:linear-gradient(135deg,#8a6a20,#c9a84c,#8a6a20);background-size:200% 100%;border:none;border-radius:8px;color:#0a0e1a;font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:12px 20px;text-decoration:none;white-space:nowrap;flex-shrink:0;">無料で受け取る →</a>
+  <a href="https://buy.stripe.com/00w14g2j46C66oBcFl33W04" target="_blank" style="background:linear-gradient(135deg,#8a3050,#e8a0b0);border:none;border-radius:8px;color:#fff;font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:12px 20px;text-decoration:none;white-space:nowrap;flex-shrink:0;">今すぐ知る →</a>
 </div>
 <div style="height:70px;"></div>
 </body>
